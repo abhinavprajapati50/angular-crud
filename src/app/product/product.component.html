@@ -1,4 +1,8 @@
-<p>product works!</p>
+<!-- <div class="flex justify-content-between">
+    <h2>Products</h2>
+    <p-button label="Add Product" severity="success" />
+
+</div>
 <p-table [value]="products" [tableStyle]="{ 'min-width': '50rem' }" [paginator]="true" [rows]="10">
   <ng-template pTemplate="header">
     <tr>
@@ -16,4 +20,60 @@
       <td><img src="{{product.image}}" height="30px"  /></td>
     </tr>
   </ng-template>
-</p-table>
+</p-table> -->
+
+
+<!-- product.component.html -->
+<div class="p-grid p-fluid">
+    <div class="p-col-12">
+      <button pButton type="button" label="Add Product" icon="pi pi-plus" (click)="showDialogToAdd()"></button>
+    </div>
+    <div class="p-col-12">
+      <p-table [value]="products">
+        <ng-template pTemplate="header">
+          <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Price</th>
+            <th>Actions</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-product>
+          <tr>
+            <td>{{ product.id }}</td>
+            <td>{{ product.title }}</td>
+            <td>{{ product.price }}</td>
+            <td>
+              <button pButton type="button" icon="pi pi-pencil" (click)="edit(product)">Edit</button>
+              <button pButton type="button" icon="pi pi-trash" (click)="delete(product.id)">Delete</button>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+  
+  <p-dialog header="Product Details" [(visible)]="displayDialog" [modal]="true" [responsive]="true"
+    (onHide)="cancel()">
+    <div class="p-grid p-fluid">
+      <div class="p-col-4">
+        <label for="title">Title</label>
+      </div>
+      <div class="p-col-8">
+        <input id="title" type="text" pInputText [(ngModel)]="newProduct.title" />
+      </div>
+      <div class="p-col-4">
+        <label for="price">Price</label>
+      </div>
+      <div class="p-col-8">
+        <input id="price" type="number" pInputText [(ngModel)]="newProduct.price" />
+      </div>
+    </div>
+    <div class="p-grid p-fluid">
+      <div class="p-col-12">
+        <button pButton type="button" label="Save" icon="pi pi-check" (click)="save()"></button>
+        <button pButton type="button" label="Cancel" icon="pi pi-times" (click)="cancel()"></button>
+      </div>
+    </div>
+  </p-dialog>
+  

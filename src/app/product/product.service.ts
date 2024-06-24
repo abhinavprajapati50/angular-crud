@@ -7,16 +7,25 @@ import { Product } from './product';
   providedIn: 'root'
 })
 export class ProductService {
+  private apiUrl = 'https://fakestoreapi.com/products';
 
 
   constructor(private http: HttpClient) { }
 
-  getProducts():Observable<Product[]> {
-    console.log("Fetching products..."); 
-    
-    return this.http.get<Product[]>("https://fakestoreapi.com/products?sort=desc")
+  getProducts(): Observable<any[]> {
+    return this.http.get<any[]>(this.apiUrl);
+  }
+  createProduct(product: any): Observable<any> {
+    return this.http.post<any>(this.apiUrl, product);
   }
 
+  updateProduct(id: number, product: any): Observable<any> {
+    return this.http.put<any>(`${this.apiUrl}/${id}`, product);
+  }
+
+  deleteProduct(id: number): Observable<any> {
+    return this.http.delete<any>(`${this.apiUrl}/${id}`);
+  }
 
 
 }
