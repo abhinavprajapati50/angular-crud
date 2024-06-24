@@ -29,7 +29,7 @@
       <button pButton type="button" label="Add Product" icon="pi pi-plus" (click)="showDialogToAdd()"></button>
     </div>
     <div class="p-col-12">
-      <p-table [value]="products">
+      <p-table [value]="products" [paginator]="true" [rows]="5">
         <ng-template pTemplate="header">
           <tr>
             <th>ID</th>
