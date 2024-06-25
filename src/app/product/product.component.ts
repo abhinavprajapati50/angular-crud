@@ -23,10 +23,14 @@ export class ProductComponent implements OnInit {
 
   loadProducts() {
     
-    this.productService.getProducts().subscribe(
-      products => this.products = products,
-      error => console.error('Error loading products', error)
-    );
+    // this.productService.getProducts().subscribe(
+    //   products => this.products = products,
+    //   error => console.error('Error loading products', error)
+    // );
+
+    this.productService.getProducts().subscribe((products) => {
+      this.products = products;
+    });
     
   }
   showDialogToAdd() {
@@ -36,9 +40,10 @@ export class ProductComponent implements OnInit {
 
   save() {
     if (this.newProduct.id) {
-      // Update existing product
+      this.products[this.newProduct.id] = this.newProduct
       this.productService.updateProduct(this.newProduct.id, this.newProduct).subscribe(
         () => {
+
           this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Product updated' });
           this.loadProducts();
         },
@@ -48,6 +53,7 @@ export class ProductComponent implements OnInit {
       // Create new product
       this.productService.createProduct(this.newProduct).subscribe(
         () => {
+          this.products.push(this.newProduct);
           this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Product created' });
           this.loadProducts();
         },
@@ -59,6 +65,8 @@ export class ProductComponent implements OnInit {
 
   delete(id: number) {
     if (confirm('Are you sure you want to delete this product?')) {
+      console.log("this.productService")
+      // this.products = this.products.filter(p => p.id !== id)
       this.productService.deleteProduct(id).subscribe(
         () => {
           this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Product deleted' });
